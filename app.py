@@ -5,6 +5,11 @@ import logging
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -13,10 +18,10 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Database connection configuration
 db_config = {
-    'user': 'root',
-    'password': 'Hungergames!1',
-    'host': 'localhost',
-    'database': 'CC_InventoryDB'
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_HOST'),
+    'database': os.getenv('DB_NAME')
 }
 
 def fetch_all_tables():
@@ -113,7 +118,7 @@ def send_email():
     # Email setup
     msg = MIMEMultipart('alternative')
     msg['Subject'] = "Bring to Main Inventory"
-    msg['From'] = 'maymunah.showkat@gmail.com'
+    msg['From'] = os.getenv('EMAIL_USER')
     msg['To'] = michael_email
     msg.attach(MIMEText(html_content, 'html'))
 
@@ -121,7 +126,7 @@ def send_email():
     try:
         smtp_server = smtplib.SMTP('smtp.gmail.com', 587)
         smtp_server.starttls()
-        smtp_server.login('maymunah.showkat@gmail.com', 'yerm mjsu fgay ndrv')
+        smtp_server.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASSWORD'))
         smtp_server.sendmail(msg['From'], [msg['To']], msg.as_string())
         smtp_server.quit()
         return redirect('/bring_to_main')
