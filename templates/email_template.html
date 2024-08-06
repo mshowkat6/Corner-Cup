@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bring to Main Inventory</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bring to Main Inventory</h1>
+    <table>
+        <tr>
+            <th>Table Name</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Item Type</th>
+            <th>Main Par</th>
+            <th>Bring to Main</th>
+            <th>Notes to Michael</th>
+            <th>Entry Date</th>
+        </tr>
+        {% for item in combined_data %}
+        <tr>
+            <td>{{ item.TableName }}</td>
+            <td>{{ item.ProductName }}</td>
+            <td>{{ item.Quantity }}</td>
+            <td>{{ item.ItemType }}</td>
+            <td>{{ item.MainPar }}</td>
+            <td>{{ item.BringToMain }}</td>
+            <td>{{ item.NotesToMichael }}</td>
+            <td>{{ item.EntryDate }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

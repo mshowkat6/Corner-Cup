@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="number"], input[type="text"] {
+            width: 100%;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Inventory List</h1>
+    <form action="/update" method="post">
+        {% for table_name, supplies in data.items() %}
+        <h2>{{ table_name }}</h2>
+        <input type="hidden" name="table_name[]" value="{{ table_name }}">
+        <table>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Item Type</th>
+                <th>Main Par</th>
+                <th>Bring to Main</th>
+                <th>Notes to Michael</th>
+                <th>Entry Date</th>
+            </tr>
+            {% for item in supplies %}
+            <tr>
+                <td>{{ item.ProductName }}</td>
+                <td>
+                    <input type="hidden" name="product_id_{{ table_name }}[]" value="{{ item.ProductID }}">
+                    <input type="number" name="quantity_{{ table_name }}[]" value="{{ item.Quantity }}">
+                </td>
+                <td>{{ item.ItemType }}</td>
+                <td>{{ item.MainPar }}</td>
+                <td>{{ item.BringToMain }}</td>
+                <td>
+                    <input type="text" name="notes_{{ table_name }}[]" value="{{ item.NotesToMichael }}">
+                </td>
+                <td>{{ item.EntryDate }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endfor %}
+        <button type="submit">Update All</button>
+    </form>
+</body>
+</html>
